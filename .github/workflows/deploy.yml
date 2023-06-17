@@ -18,7 +18,7 @@ jobs:
           K8S_CONFIG: ${{ secrets.KUBECONFIG }}
         run: |
           mkdir -p $HOME/.kube
-          echo "${K8S_CONFIG}" | base64 --decode > $HOME/.kube/config
+          echo "${K8S_CONFIG}" > $HOME/.kube/config
 
       - name: Apply pods
         run: k8s create deployment kubernetes-bootcamp --image=gcr.io/google-samples/kubernetes-bootcamp:v1
