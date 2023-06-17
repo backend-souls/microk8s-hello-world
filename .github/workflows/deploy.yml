@@ -1,0 +1,30 @@
+name: build-deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  dev:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Kubectl tool installer
+        uses: Azure/setup-kubectl@v1
+
+      - name: Setup kubectl
+        env:
+          K8S_CONFIG: ${{ secrets.KUBECONFIG }}
+        run: |
+          mkdir -p $HOME/.kube
+          echo "${K8S_CONFIG}" | base64 --decode > $HOME/.kube/config
+
+      - name: Apply pods
+        run: k8s create deployment kubernetes-bootcamp --image=gcr.io/google-samples/kubernetes-bootcamp:v1
+
+      - name: Wait For Deployment To Start
+        run: sleep 10s
+
+      - name: Wait For Pods To Start
+        run: kubectl wait --for=condition=ready pod -l app=gokub-tester -n dev --timeout=10m
