@@ -21,7 +21,7 @@ jobs:
           echo "${K8S_CONFIG}" > $HOME/.kube/config
 
       - name: Apply pods
-        run: kubectl create deployment kubernetes-bootcamp --image=gcr.io/google-samples/kubernetes-bootcamp:v1
+        run: kubectl create deployment from-github-actions --image=gcr.io/google-samples/kubernetes-bootcamp:v1
 
       - name: Wait For Deployment To Start
         run: sleep 10s
