@@ -21,10 +21,10 @@ jobs:
           echo "${K8S_CONFIG}" > $HOME/.kube/config
 
       - name: Apply pods
-        run: kubectl create deployment from-github-actions --image=gcr.io/google-samples/kubernetes-bootcamp:v1
+        run: kubectl create deployment from-github-actions-2 --image=gcr.io/google-samples/kubernetes-bootcamp:v1
 
       - name: Wait For Deployment To Start
         run: sleep 10s
 
       - name: Wait For Pods To Start
-        run: kubectl wait --for=condition=ready pod -l app=gokub-tester -n dev --timeout=10m
+        run: kubectl wait --for=condition=ready pod -l app=from-github-actions-2 -n dev --timeout=10m
